@@ -214,7 +214,7 @@ function interpolateRotationMatrix(rotationAngle, progress) {
 
 /**
  * Interpolates a reflection matrix across the line extending from the origin
- * at `axisAngle` degrees, according to `progress1, which ranges between 0 and 1.
+ * at `axisAngle` degrees, according to `progress1`, which ranges between 0 and 1.
  * @param {*} reflectionAxisAngle the reflection axis angle in degrees
  * @param {*} progress progress of the action between 0 and 1
  * @returns the reflection transformation matrix
