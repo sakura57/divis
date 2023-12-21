@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dihedral group visualizer</title>
+    <link rel="stylesheet" href="dihfstyle.css">
+    <script id="shaderVs" type="x-shader/x-vertex">
+      attribute vec4 a_Position;
+      attribute vec4 a_Color;
+      uniform mat4 u_Transform;
+      uniform mat4 u_Projection;
+      uniform mat4 u_View;
+      uniform mat4 u_Model;
+      varying vec4 v_Color;
+      varying vec4 v_Position;
+
+      void main() {
+          gl_Position = u_Projection * u_View * u_Transform * u_Model * a_Position;
+          v_Color = a_Color;
+          v_Position = a_Position;
+      }
+    </script>
+    
+    <script id="shaderFs" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4 v_Color;
+      varying vec4 v_Position;
+
+      void main() {
+        gl_FragColor = v_Color;
+      }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3.4.3/gl-matrix-min.min.js"></script>
+    <script type="text/javascript" src="dihvis.js"></script>
+  </head>
+ 
+  <body onload="init()">
+    <h1>Dihedral group visualizer</h1>
+    <div class="visualizerContainer">
+      <canvas id="glcanvas" width=600 height=400>
+            It seems the browser does not support the 'canvas' tag (part of HTML5)
+      </canvas>
+      <div id="overlay">
+        <div>Current state: <span id="elemState"></span></div>
+        <div><span id="elemDesc"></span></div>
+      </div>
+      <div id="grpActCollection">
+        <table>
+          <tr>
+            <th>Options</th>
+            <th>Controls</th>
+            <th>Rotations</th>
+            <th>Reflections</th>
+          </tr>
+          <tr id="tblGrpActButtons">
+            <td>
+              <div>
+                <button onclick="groupStateReset()">Reset</button>
+              </div>
+            </td>
+            <td>
+              <div>
+                <div>
+                  <select id="polySelector" onchange="groupNew()">
+                    <option value="3"># sides</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+            </div>
+            </td>
+            <td id="tblGrpColRotations">
+              <button onclick="groupAction('r0')">r0</button>
+              <button onclick="groupAction('r1')">r1</button>
+              <button onclick="groupAction('r2')">r2</button>
+            </td>
+            <td id="tblGrpColReflections">
+              <button onclick="groupAction('s0')">s0</button>
+              <button onclick="groupAction('s1')">s1</button>
+              <button onclick="groupAction('s2')">s2</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
