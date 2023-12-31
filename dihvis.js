@@ -280,7 +280,9 @@ function interpretCurrentState() {
 
     // Check for the (1, 0) special case
     if (a === 0 && c === 0) {
-        return [1, 0];
+      return [1, 0];
+    } else if(b === 0 && d === 0) {
+      return [-1, 0];
     }
 
     // Otherwise, solve for the second component assuming the first component is 1
@@ -350,7 +352,13 @@ function getElementString() {
 
   if(reflection) {
     elem = "s";
-    const digit = mod(Math.round(reflectionAngle * 2.0 / (360.0 / numPolygonSides)), numPolygonSides);
+    var digit;
+    // edge case when reflection angle is 180
+    if(tolerantEquals(reflectionAngle, 180.0)) {
+      digit = numPolygonSides / 2;
+    } else {
+      digit = mod(Math.round(reflectionAngle * 2.0 / (360.0 / numPolygonSides)), numPolygonSides);
+    }
     elem += digit;
   } else {
     elem = "r";
